@@ -1,12 +1,18 @@
 from django.urls import path
-from . import views
 from .views import CustomerAPIView
-
+from . import views
 
 
 urlpatterns = [
-    path('account/register', views.UserCreate.as_view()),
-    path('customer/<int:id>/', CustomerAPIView.as_view()),
+    path('customer/', CustomerAPIView.as_view()),
+    path('customer/<int:id>', views.customer_detail),
+    
+    
     
 
 ]
+
+
+
+
+
