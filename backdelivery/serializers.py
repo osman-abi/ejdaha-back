@@ -7,7 +7,7 @@ from .models import Customer, Courier, DeliveryPackages
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ('id','ad','soyad','phone_number','email')
+        fields = ('id','ad','soyad','phone_number','email','musterinin_sifarisi','location','total')
 
 class CourierSerializer(serializers.ModelSerializer):
     class Meta:
