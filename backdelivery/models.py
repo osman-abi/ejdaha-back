@@ -10,6 +10,8 @@ class Customer(models.Model):
     location = models.CharField(max_length=250)
     total = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.ad
 
 class Courier(models.Model):
     ad = models.CharField(max_length=50)
@@ -17,6 +19,8 @@ class Courier(models.Model):
     phone_number = models.CharField(max_length=15, blank=True)
     is_busy = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.ad
 
 class DeliveryPackages(models.Model):
     musterinin_ad = models.CharField(max_length=50)
