@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Customer
+from .models import (Customer, Courier, DeliveryPackages)
 
 admin.site.register(Customer)
-# Register your models here.
+admin.site.register(Courier)
+admin.site.register(DeliveryPackages)
+

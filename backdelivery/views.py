@@ -3,10 +3,10 @@ from rest_framework.decorators import api_view
 from rest_framework import generics
 from django.contrib.auth.models import User
 from rest_framework import mixins
-from .models import Customer, Courier
+from .models import Customer, Courier, DeliveryPackages
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-from .serializers import  CustomerSerializer, CourierSerializer
+from .serializers import  CustomerSerializer, CourierSerializer, DeliveryPackagesSerializer
 
 
 
@@ -56,3 +56,28 @@ def courier_detail(request,id):
     courier = Courier.objects.get(id=id)
     serializer = CourierSerializer(courier)
     return Response(serializer.data) 
+
+
+class DeliveryAPIView(generics.GenericAPIView,mixins.ListModelMixin,mixins.CreateModelMixin,mixins.UpdateModelMixin,mixins.RetrieveModelMixin,mixins.DestroyModelMixin):
+    serializer_class = DeliveryPackagesSerializer
+    queryset = DeliveryPackages.objects.all()
+
+
+    def get(self, request):
+        return self.list(request)
+        
+
+
+
+    def post(self, request):
+        return self.create(request)
+
+
+
+@api_view(['GET'])
+def delivery_detail(request,id):
+    delivery = DeliveryPackages.objects.get(id=id)
+    serializer = DeliveryPackagesSerializer(delivery)
+    return Response(serializer.data) 
+
+
