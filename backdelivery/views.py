@@ -3,10 +3,12 @@ from rest_framework.decorators import api_view
 from rest_framework import generics
 from django.contrib.auth.models import User
 from rest_framework import mixins
-from .models import Customer, Courier, DeliveryPackages
+from .models import Customer, Courier, DeliveryPackages ,PredResults
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-from .serializers import  CustomerSerializer, CourierSerializer, DeliveryPackagesSerializer
+from .serializers import  CustomerSerializer, CourierSerializer, DeliveryPackagesSerializer, PredSerializer
+
+import pandas as pd 
 
 
 
@@ -79,3 +81,30 @@ def delivery_detail(request,id):
     delivery = DeliveryPackages.objects.get(id=id)
     serializer = DeliveryPackagesSerializer(delivery)
     return Response(serializer.data) 
+
+
+class PostsView(generics.ListCreateAPIView):
+    serializer_class = PredSerializer
+
+    def get(self, request,*args,**kvargs):
+        Recency = float(self.request.GET.get('Recency'))
+        Frequency = float(self.request.GET.get('Frequency'))
+        Monetary = float(self.request.GET.get('Monetary'))
+        R = float(self.request.GET.get('R'))
+        F = float(self.request.GET.get('F'))
+        M = float(self.request.GET.get('M'))
+        RFMGroup = float(self.request.GET.get('RFMGroup'))
+        RFMScore = float(self.request.GET.get('RFMScore'))
+
+        pd.to_pickle(model,r'C:\Users\ATL Academy\Desktop\new_model.pickle')
+        result = model.predict(
+            [[Recency,Frequency,Monetary,R,F,M,RFMGroup,RFMScore]]
+        )
+
+        classification = result[0]
+        serializer  = PredSerializer(data = self.request.GET)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(result[0])
+        return Response(serializer.errors, status = 400)
+
