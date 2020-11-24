@@ -39,6 +39,20 @@ class DeliveryPackages(models.Model):
 
 
 
+class PredResults(models.Model):
+    Recency = models.FloatField()
+    Frequency = models.FloatField()
+    Monetary = models.FloatField()
+    R = models.FloatField()
+    F = models.FloatField()
+    M = models.FloatField()
+    RFMGroup = models.FloatField()
+    RFMScore = models.FloatField()
+
+
+
+
+
 
 
 
