@@ -7,8 +7,8 @@ from .models import Customer, Courier, DeliveryPackages ,PredResults
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from .serializers import  CustomerSerializer, CourierSerializer, DeliveryPackagesSerializer, PredSerializer
-
 import pandas as pd 
+from smtplib import SMTP
 
 
 
@@ -72,7 +72,25 @@ class DeliveryAPIView(generics.GenericAPIView,mixins.ListModelMixin,mixins.Creat
 
 
     def post(self, request):
-        return self.create(request)
+        try:
+            subject = "Test"
+            message = "Osman necesen ?"
+            content = "Subject: {0}\n\n{1}".format(subject,message)
+
+            myMailAdress = "muradaydin122@gmail.com"
+            password = "Ma910910."
+
+            sendTo = "osmanmammadov97@gmail.com"
+
+            mail = SMTP("smtp.gmail.com", 587)
+            mail.ehlo()
+            mail.starttls()
+            mail.login(myMailAdress,password)
+            mail.sendmail(myMailAdress,sendTo,content.encode("utf-8"))
+            print("Mail gonderildi")
+        except Exception as e:
+            print("Error Handle\n {0}".format(e))
+            return self.create(request)
 
 
 
@@ -96,7 +114,7 @@ class PostsView(generics.ListCreateAPIView):
         RFMGroup = float(self.request.GET.get('RFMGroup'))
         RFMScore = float(self.request.GET.get('RFMScore'))
 
-        pd.to_pickle(model,r'C:\Users\ATL Academy\Desktop\new_model.pickle')
+        pd.to_pickle(model,r'C:\Users\Murad\Desktop\new_model.pickle')
         result = model.predict(
             [[Recency,Frequency,Monetary,R,F,M,RFMGroup,RFMScore]]
         )

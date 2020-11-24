@@ -124,8 +124,12 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Ejdahaa',
+        'USER': 'postgres',
+        'PASSWORD': '1999',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
