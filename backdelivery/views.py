@@ -74,13 +74,13 @@ class DeliveryAPIView(generics.GenericAPIView,mixins.ListModelMixin,mixins.Creat
     def post(self, request):
         try:
             subject = "Test"
-            message = "Osman necesen ?"
+            message = "Sizin Sifarişiniz Yola Çıxdı.Təşəkkür edirik !"
             content = "Subject: {0}\n\n{1}".format(subject,message)
 
             myMailAdress = "muradaydin122@gmail.com"
             password = "Ma910910."
 
-            sendTo = "osmanmammadov97@gmail.com"
+            sendTo = Customer.email
 
             mail = SMTP("smtp.gmail.com", 587)
             mail.ehlo()
