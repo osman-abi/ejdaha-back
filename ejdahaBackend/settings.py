@@ -61,14 +61,7 @@ REST_FRAMEWORK = {
 }
 
 
-  
 
-
-
-# JWT_AUTH = {
-#     # Authorization:Token xxx
-#     'JWT_AUTH_HEADER_PREFIX': 'Token',
-# }
 
 AUTH_USER_MODEL = 'account.User'
 
