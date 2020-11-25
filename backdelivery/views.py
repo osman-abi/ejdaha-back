@@ -7,7 +7,7 @@ from .models import Customer, Courier, DeliveryPackages ,PredResults
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from .serializers import  CustomerSerializer, CourierSerializer, DeliveryPackagesSerializer, PredSerializer
-
+import pickle
 import pandas as pd 
 
 
@@ -96,7 +96,7 @@ class PostsView(generics.ListCreateAPIView):
         RFMGroup = float(self.request.GET.get('RFMGroup'))
         RFMScore = float(self.request.GET.get('RFMScore'))
 
-        pd.to_pickle(model,r'C:\Users\ATL Academy\Desktop\new_model.pickle')
+        model = pd.read_pickle(r'C:\Users\ATL Academy\Desktop\new_model.pickle')
         result = model.predict(
             [[Recency,Frequency,Monetary,R,F,M,RFMGroup,RFMScore]]
         )
