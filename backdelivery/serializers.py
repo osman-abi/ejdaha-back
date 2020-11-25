@@ -12,7 +12,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 class CourierSerializer(serializers.ModelSerializer):
     class Meta:
         model = Courier
-        fields = ('ad', 'soyad', 'phone_number', 'is_busy')
+        fields = ('id','ad', 'soyad', 'phone_number', 'is_busy')
 
 
 class DeliveryPackagesSerializer(serializers.ModelSerializer):

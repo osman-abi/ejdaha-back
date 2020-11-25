@@ -22,7 +22,6 @@ class Courier(models.Model):
     def __str__(self):
         return self.ad
 
-
 class DeliveryPackages(models.Model):
     musterinin_adi = models.CharField(max_length=50)
     musterinin_soyadi = models.CharField(max_length=50)

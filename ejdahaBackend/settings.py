@@ -9,9 +9,9 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
-
+from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -61,14 +61,7 @@ REST_FRAMEWORK = {
 }
 
 
-  
 
-
-
-# JWT_AUTH = {
-#     # Authorization:Token xxx
-#     'JWT_AUTH_HEADER_PREFIX': 'Token',
-# }
 
 AUTH_USER_MODEL = 'account.User'
 
@@ -87,6 +80,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=2),
+}
 
 
 
@@ -118,8 +117,12 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ajdaha',
+        'USER': 'postgres',
+        'PASSWORD': 'posm20031997',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -161,3 +164,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
