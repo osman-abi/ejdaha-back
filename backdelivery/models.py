@@ -22,7 +22,6 @@ class Courier(models.Model):
     def __str__(self):
         return self.ad
 
-
 class DeliveryPackages(models.Model):
     musterinin_adi = models.CharField(max_length=50)
     musterinin_soyadi = models.CharField(max_length=50)
@@ -36,6 +35,20 @@ class DeliveryPackages(models.Model):
 
     def __str__(self):
         return self.musterinin_sifarisi
+
+
+
+
+class PredResults(models.Model):
+    Recency = models.FloatField()
+    Frequency = models.FloatField()
+    Monetary = models.FloatField()
+    R = models.FloatField()
+    F = models.FloatField()
+    M = models.FloatField()
+    RFMGroup = models.FloatField()
+    RFMScore = models.FloatField()
+
 
 
 

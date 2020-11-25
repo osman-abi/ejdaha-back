@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Customer, Courier, DeliveryPackages
+from .models import Customer, Courier, DeliveryPackages , PredResults
 
 
 
@@ -18,4 +18,9 @@ class CourierSerializer(serializers.ModelSerializer):
 class DeliveryPackagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = DeliveryPackages
+        fields = '__all__'
+
+class PredSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PredResults
         fields = '__all__'
