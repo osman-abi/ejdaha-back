@@ -8,10 +8,7 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import  CustomerSerializer, CourierSerializer, DeliveryPackagesSerializer, PredSerializer
-<<<<<<< HEAD
 import pickle
-=======
->>>>>>> 57c62663248f074c3c751b142f3fc856c6af6276
 import pandas as pd 
 from smtplib import SMTP
 
