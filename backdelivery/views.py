@@ -78,7 +78,7 @@ class DeliveryAPIView(generics.GenericAPIView,mixins.ListModelMixin,mixins.Creat
             content = "Subject: {0}\n\n{1}".format(subject,message)
 
             myMailAdress = "muradaydin122@gmail.com"
-            password = "Ma910910."
+            password = "*******"
 
             sendTo = Customer.email
 
@@ -114,7 +114,7 @@ class PostsView(generics.ListCreateAPIView):
         RFMGroup = float(self.request.GET.get('RFMGroup'))
         RFMScore = float(self.request.GET.get('RFMScore'))
 
-        pd.to_pickle(model,r'C:\Users\Murad\Desktop\new_model.pickle')
+        model = pd.read_pickle(r'C:\Users\Murad\Desktop\new_model.pickle')
         result = model.predict(
             [[Recency,Frequency,Monetary,R,F,M,RFMGroup,RFMScore]]
         )
