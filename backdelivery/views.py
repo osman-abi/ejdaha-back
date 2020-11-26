@@ -8,28 +8,26 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import  CustomerSerializer, CourierSerializer, DeliveryPackagesSerializer, PredSerializer
+from django.http import HttpResponse, JsonResponse
+from rest_framework.parsers import JSONParser
+from django.views.decorators.csrf import csrf_exempt
 import pickle
 import pandas as pd 
 from smtplib import SMTP
-
+from rest_framework.response import Response
 
 
 class CustomerAPIView(generics.GenericAPIView,mixins.ListModelMixin,mixins.CreateModelMixin,mixins.UpdateModelMixin,mixins.RetrieveModelMixin,mixins.DestroyModelMixin):
     serializer_class = CustomerSerializer
     queryset = Customer.objects.all()
 
-
-
     def get(self, request):
         return self.list(request)
         
-
-
-
     def post(self, request):
         return self.create(request)
 
-from rest_framework.response import Response
+
 
 @api_view(['GET','DELETE'])
 def customer_detail(request,id):
@@ -75,41 +73,40 @@ def courier_detail(request,id):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class DeliveryAPIView(generics.GenericAPIView,mixins.ListModelMixin,mixins.CreateModelMixin,mixins.UpdateModelMixin,mixins.RetrieveModelMixin,mixins.DestroyModelMixin):
-    serializer_class = DeliveryPackagesSerializer
-    queryset = DeliveryPackages.objects.all()
 
 
-    def get(self, request):
-        return self.list(request)
+@csrf_exempt
+def delivery_package(request):
+    if request.method == 'GET':
+        delivery_packages = DeliveryPackages.objects.all()
+        serializer = DeliveryPackagesSerializer(delivery_packages, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = DeliveryPackagesSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            try:
+                subject = "Delivery Module"
+                message = "Sizin Sifarişiniz Yola Çıxdı.Təşəkkür edirik !"
+                content = "Subject: {0}\n\n{1}".format(subject,message)
+
+                myMailAdress = "muradaydin122@gmail.com"
+                password = "Ma910910."
+
+                sendTo = serializer.data.get('email')
+
+                mail = SMTP("smtp.gmail.com", 587)
+                mail.ehlo()
+                mail.starttls()
+                mail.login(myMailAdress,password)
+                mail.sendmail(myMailAdress,sendTo,content.encode("utf-8"))
+            except Exception as e:
+                print("Error Handle\n {0}".format(e))
         
-
-
-
-    def post(self, request):
-        print('==================',self.serializer_class)
-        return self.create(request)
-        try:
-            subject = "Test"
-            message = "Sizin Sifarişiniz Yola Çıxdı.Təşəkkür edirik !"
-            content = "Subject: {0}\n\n{1}".format(subject,message)
-
-            myMailAdress = "muradaydin122@gmail.com"
-            password = "*******"
-
-            sendTo = Customer.email
-
-            mail = SMTP("smtp.gmail.com", 587)
-            mail.ehlo()
-            mail.starttls()
-            mail.login(myMailAdress,password)
-            mail.sendmail(myMailAdress,sendTo,content.encode("utf-8"))
-            print("Mail gonderildi")
-        except Exception as e:
-            print("Error Handle\n {0}".format(e))
-            return self.create(request)
-
-
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
 
 @api_view(['GET'])
 def delivery_detail(request,id):
