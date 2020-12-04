@@ -9,6 +9,7 @@ class Customer(models.Model):
     musterinin_sifarisi = models.CharField(max_length=50)
     location = models.CharField(max_length=250)
     total = models.CharField(max_length=50)
+    time = models.CharField(max_length=10)
     
     def __str__(self):
         return self.ad
@@ -27,6 +28,7 @@ class DeliveryPackages(models.Model):
     musterinin_soyadi = models.CharField(max_length=50)
     musterinin_sifarisi = models.CharField(max_length=50)
     musterinin_nomresi = models.CharField(max_length=15, blank=True)
+    email = models.EmailField(max_length=100)
     kuryerin_adi = models.CharField(max_length=50)
     kuryerin_soyadi = models.CharField(max_length=50)
     kuryerin_nomresi = models.CharField(max_length=15, blank=True)
@@ -39,15 +41,15 @@ class DeliveryPackages(models.Model):
 
 
 
-# class PredResults(models.Model):
-#     Recency = models.FloatField()
-#     Frequency = models.FloatField()
-#     Monetary = models.FloatField()
-#     R = models.FloatField()
-#     F = models.FloatField()
-#     M = models.FloatField()
-#     RFMGroup = models.FloatField()
-#     RFMScore = models.FloatField()
+class PredResults(models.Model):
+    Recency = models.FloatField()
+    Frequency = models.FloatField()
+    Monetary = models.FloatField()
+    R = models.FloatField()
+    F = models.FloatField()
+    M = models.FloatField()
+    RFMGroup = models.FloatField()
+    RFMScore = models.FloatField()
 
 
 
