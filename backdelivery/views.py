@@ -3,14 +3,14 @@ from rest_framework.decorators import api_view
 from rest_framework import generics
 from django.contrib.auth.models import User
 from rest_framework import mixins
-from .models import Customer, Courier, DeliveryPackages ,PredResults
+from .models import Customer, Courier, DeliveryPackages 
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import  CustomerSerializer, CourierSerializer, DeliveryPackagesSerializer, PredSerializer
-import pickle
-import pandas as pd 
-from smtplib import SMTP
+from .serializers import  CustomerSerializer, CourierSerializer, DeliveryPackagesSerializer
+# import pickle
+# import pandas as pd 
+# from smtplib import SMTP
 
 
 
@@ -89,25 +89,25 @@ class DeliveryAPIView(generics.GenericAPIView,mixins.ListModelMixin,mixins.Creat
     def post(self, request):
         print('==================',self.serializer_class)
         return self.create(request)
-        try:
-            subject = "Test"
-            message = "Sizin Sifarişiniz Yola Çıxdı.Təşəkkür edirik !"
-            content = "Subject: {0}\n\n{1}".format(subject,message)
+        # try:
+        #     subject = "Test"
+        #     message = "Sizin Sifarişiniz Yola Çıxdı.Təşəkkür edirik !"
+        #     content = "Subject: {0}\n\n{1}".format(subject,message)
 
-            myMailAdress = "muradaydin122@gmail.com"
-            password = "Ma910910."
+        #     myMailAdress = "muradaydin122@gmail.com"
+        #     password = "Ma910910."
 
-            sendTo = Customer.email
+        #     sendTo = Customer.email
 
-            mail = SMTP("smtp.gmail.com", 587)
-            mail.ehlo()
-            mail.starttls()
-            mail.login(myMailAdress,password)
-            mail.sendmail(myMailAdress,sendTo,content.encode("utf-8"))
-            print("Mail gonderildi")
-        except Exception as e:
-            print("Error Handle\n {0}".format(e))
-            return self.create(request)
+        #     mail = SMTP("smtp.gmail.com", 587)
+        #     mail.ehlo()
+        #     mail.starttls()
+        #     mail.login(myMailAdress,password)
+        #     mail.sendmail(myMailAdress,sendTo,content.encode("utf-8"))
+        #     print("Mail gonderildi")
+        # except Exception as e:
+        #     print("Error Handle\n {0}".format(e))
+            # return self.create(request)
 
 
 
@@ -118,32 +118,28 @@ def delivery_detail(request,id):
     return Response(serializer.data) 
 
 
-class PostsView(generics.ListCreateAPIView):
-    serializer_class = PredSerializer
+# class PostsView(generics.ListCreateAPIView):
+#     serializer_class = PredSerializer
 
-    def get(self, request,*args,**kvargs):
-        Recency = float(self.request.GET.get('Recency'))
-        Frequency = float(self.request.GET.get('Frequency'))
-        Monetary = float(self.request.GET.get('Monetary'))
-        R = float(self.request.GET.get('R'))
-        F = float(self.request.GET.get('F'))
-        M = float(self.request.GET.get('M'))
-        RFMGroup = float(self.request.GET.get('RFMGroup'))
-        RFMScore = float(self.request.GET.get('RFMScore'))
+#     def get(self, request,*args,**kvargs):
+#         Recency = float(self.request.GET.get('Recency'))
+#         Frequency = float(self.request.GET.get('Frequency'))
+#         Monetary = float(self.request.GET.get('Monetary'))
+#         R = float(self.request.GET.get('R'))
+#         F = float(self.request.GET.get('F'))
+#         M = float(self.request.GET.get('M'))
+#         RFMGroup = float(self.request.GET.get('RFMGroup'))
+#         RFMScore = float(self.request.GET.get('RFMScore'))
 
-<<<<<<< HEAD
-        model = pd.read_pickle(r'C:\Users\ATL Academy\Desktop\new_model.pickle')
-=======
-        model = pd.read_pickle(model,r'C:\Users\Murad\Desktop\new_model.pickle')
->>>>>>> 57c62663248f074c3c751b142f3fc856c6af6276
-        result = model.predict(
-            [[Recency,Frequency,Monetary,R,F,M,RFMGroup,RFMScore]]
-        )
+#         model = pd.read_pickle(model,r'C:\Users\Murad\Desktop\new_model.pickle')
+#         result = model.predict(
+#             [[Recency,Frequency,Monetary,R,F,M,RFMGroup,RFMScore]]
+#         )
 
-        classification = result[0]
-        serializer  = PredSerializer(data = self.request.GET)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(result[0])
-        return Response(serializer.errors, status = 400)
+#         classification = result[0]
+#         serializer  = PredSerializer(data = self.request.GET)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(result[0])
+#         return Response(serializer.errors, status = 400)
 

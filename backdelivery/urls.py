@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CustomerAPIView, CourierAPIView, DeliveryAPIView ,PostsView
+from .views import CustomerAPIView, CourierAPIView, DeliveryAPIView 
 from . import views
 
 
@@ -10,7 +10,7 @@ urlpatterns = [
     path('courier/<int:id>/', views.courier_detail),
     path('delivery/', DeliveryAPIView.as_view()),
     path('delivery/<int:id>/', views.delivery_detail),
-    path('posts/',PostsView.as_view(),name = 'posts_view')
+    # path('posts/',PostsView.as_view(),name = 'posts_view')
     
     
     ]
